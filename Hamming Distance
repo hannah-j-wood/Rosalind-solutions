@@ -1,0 +1,11 @@
+def hamming_distance(string_file):
+    '''Given two strings, returns hamming distance.'''
+    with open(string_file,'r') as infile:
+        strings = []
+        for line in infile:
+            strings.append(line.strip())
+    hamming_distance = 0
+    for index in range(len(strings[0])):
+        if strings[0][index] != strings[1][index]:
+            hamming_distance += 1
+    return hamming_distance
