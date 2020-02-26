@@ -1,0 +1,55 @@
+def consensus_seq(file):
+    with open(file,'r') as infile:
+        #pull all sequences
+        sequences = []
+        temp_seq = ''
+        for line in infile:
+            if line.startswith('>'):
+                if temp_seq != '':
+                    sequences.append(temp_seq)
+                    temp_seq = ''
+                else:
+                    continue
+            else:
+                temp_seq += line.strip()
+        sequences.append(temp_seq)
+    length = len(sequences[0])
+    A = []
+    C = []
+    G = []
+    T = []
+    a = 0
+    c = 0
+    g = 0
+    t = 0
+    for i in range(length): #count number of each base at each position in each string
+        for seq in sequences:
+            if seq[i] == 'A':
+                a += 1
+            elif seq[i] == 'C':
+                c += 1
+            elif seq[i] == 'G':
+                g += 1
+            elif seq[i] == 'T':
+                t += 1
+            continue
+        A.append(a)
+        a = 0
+        C.append(c)
+        c = 0
+        G.append(g)
+        g = 0
+        T.append(t)
+        t = 0
+        continue
+    #don't remember what this part does
+    profile = [A,C,G,T]
+    temp = []
+    inds = ''
+    for i in range(length):
+        for p in profile:
+            temp.append(p[i])
+            continue
+        inds += str(temp.index(max(temp)))
+        temp = []
+    return inds.translate(str.maketrans("0123","ACGT"))
