@@ -1,0 +1,19 @@
+def find_restriction_sites(seq_fasta_file):
+    '''Finds palindromes 4-12 bases long for a single sequence.
+    Returns list of tuples.
+    First value is index. Second value is length.'''
+    with open(seq_fasta_file,'r') as infile:
+        DNA_seq = ''.join([line.strip() for line in infile if line.startswith('>') == False])
+    length = len(DNA_seq)
+    count = 4
+    site_len = []
+    while count <= 12:
+        for i in range(length):
+            temp_seq = DNA_seq[i:i+count]
+            rev_seq = temp_seq.translate(str.maketrans("ATCG","TAGC"))[::-1]
+            if temp_seq == rev_seq and len(temp_seq) == count:
+                site_len.append((i+1,len(temp_seq)))
+                continue
+            continue
+        count += 1
+    return site_len
